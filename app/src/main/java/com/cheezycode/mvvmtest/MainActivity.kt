@@ -14,9 +14,9 @@ import com.cheezycode.mvvmtest.viewmodels.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainViewModel: MainViewModel
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter : ProductAdapter
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter : ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         val repository = (application as StoreApplication).productRepository
-        mainViewModel = ViewModelProvider(this, MainViewModelFactory(repository))
-            .get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, MainViewModelFactory(repository))[MainViewModel::class.java]
 
         mainViewModel.getProducts()
 
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> TODO()
             }
         })
     }
