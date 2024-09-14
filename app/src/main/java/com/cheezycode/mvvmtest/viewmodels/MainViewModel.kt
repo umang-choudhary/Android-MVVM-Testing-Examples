@@ -13,9 +13,9 @@ class MainViewModel(private val repository: ProductRepository) : ViewModel() {
 
     private val _products = MutableLiveData<NetworkResult<List<ProductListItem>>>()
     val products: LiveData<NetworkResult<List<ProductListItem>>>
-    get() = _products
+        get() = _products
 
-    fun getProducts(){
+    fun getProducts() {
         viewModelScope.launch {
             val result = repository.getProducts()
             _products.postValue(result)
